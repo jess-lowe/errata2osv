@@ -17,7 +17,7 @@ def OSVBugFromErrataUpdate(errata_update: ErrataUpdateXMLView, ecosystem=None) -
         logging.warning(f'errata update {errata_update.id} has no title')
     osv.summary = errata_update.title
     osv.affected_packages = _assemble_affected_packages(errata_update, ecosystem)
-    osv.related = _related_from_description(errata_update)
+    osv.upstream = _upstream_from_description(errata_update)
     osv.published_date = errata_update.issued
     osv.modified_date = errata_update.updated
     if errata_update.description is None:
@@ -81,8 +81,8 @@ def _package_full_version(package: ErrataPackageXMLView) -> str:
         return f'{package.version}-{package.release}'
 
 
-def _related_from_description(errata_update: ErrataUpdateXMLView) -> List:
-    """Get aliases from description"""
+def _upstream_from_description(errata_update: ErrataUpdateXMLView) -> List:
+    """Get upstreams from description"""
     description = str(errata_update.title or '') + str(errata_update.description or '')
     return re.findall(r'CVE-\d{4}-\d{4,7}', description)
 
