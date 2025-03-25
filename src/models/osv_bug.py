@@ -12,7 +12,6 @@ class OSVBugJsonView():
         self.summary = bug.summary
         self.affected_packages = sorted(copy.deepcopy(bug.affected_packages),
                                         key=lambda affected: affected.package.name)
-        self.related = copy.deepcopy(bug.related)
         self.upstream = copy.deepcopy(bug.upstream)
         self.published = bug.published_date
         self.modified = bug.modified_date
